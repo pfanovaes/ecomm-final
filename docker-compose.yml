@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  #Base de dados MySQL
+  usuarios-mysql:
+    image: mysql:latest
+    container_name: usuarios-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: usuarios
+  #App de usuarios, que usa o mysql
+  usuarios-app:
+    image: "usuarios-mysql-app"
+    ports:
+      - 8080:8080
+    depends_on: 
+      - usuarios-mysql
+    container_name: "usuarios-mysql-main"
+  #Base de dados mongo
+  produtos-mongo:
+    image: mongo:latest
+    container_name: produtos-mongo
+  #App de produtos, que usa mongo
+  produtos-app:
+    image: "produtos-app"
+    ports:
+      - 8081:8081
+    container_name: "produtos-app-instance"
